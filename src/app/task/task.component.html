@@ -1,6 +1,6 @@
 <div class="task" id={{i}}>
 
-    <p class="content">{{task.name}}</p>
+    <p class="content">{{task.name ? task.name : ''}}</p>
     
     <p class="deadline">{{task.deadline | date: 'yyyy-MM-dd':'':'pl' }}</p>
     

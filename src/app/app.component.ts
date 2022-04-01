@@ -43,13 +43,15 @@ export class AppComponent implements OnInit, AfterViewInit {
     )
     setTimeout(() => this.taskDy = this.getTaskDy(),500)
   }
-  
 
   // interaction
-  onMousedown(x: number, y: number, _target: EventTarget): void {
-    const target = (_target as HTMLElement) 
-    if (target.classList.contains('task')) { 
-      const index = target.getAttribute('id')
+  onStart(x: number, y: number, _target: EventTarget): void {
+    const target = (_target as HTMLElement)
+    const parent = target.parentNode as HTMLElement
+    let index: string
+    if (target.classList.contains('task')) index = target.getAttribute('id')
+    if (parent.classList.contains('task')) index = parent.getAttribute('id')
+    if (index) { 
       this.isActive = true
       this.action.i = parseInt(index)
       this.action.xStart = x
@@ -58,7 +60,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onMouseup(): void {
+  onStop(): void {
     if (this.isActive) { 
       this.isActive = false
       this.reorder()
@@ -66,7 +68,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onMousemove(x: number, y: number): void {
+  onMove(x: number, y: number): void {
     if (this.isActive) { 
 
       this.action.dx = x - this.action.xStart
@@ -108,6 +110,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   
   deleteTask(i: number): void {
     this.tasks = this.tasks.filter((t, index) => i !== index)
+    this.taskElemRefArr = this.taskElemRefArr.filter((t, index) => i !== index)
   }
 
 

@@ -2,12 +2,14 @@
 <app-header></app-header>
 
 
-
 <div 
   class="tasks"
-  (mousedown)="onMousedown($event.pageX, $event.pageY, $event.target)"
-  (mouseup)="onMouseup()"
-  (mousemove)="onMousemove($event.pageX, $event.pageY)"
+  (touchstart)="onStart($event.changedTouches[0].pageX, $event.changedTouches[0].pageY, $event.target)"
+  (touchend)="onStop()"
+  (touchmove)="onMove($event.changedTouches[0].pageX, $event.changedTouches[0].pageY); $event.preventDefault()"
+  (mousedown)="onStart($event.pageX, $event.pageY, $event.target)"
+  (mouseup)="onStop()"
+  (mousemove)="onMove($event.pageX, $event.pageY); $event.preventDefault()"
 >
 
   <ng-container *ngFor="let task of tasks; let i = index">
