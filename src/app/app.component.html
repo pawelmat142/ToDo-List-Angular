@@ -1,29 +1,42 @@
 
-<app-header></app-header>
-
-
-<div 
-  class="tasks"
-  (touchstart)="onStart($event.changedTouches[0].pageX, $event.changedTouches[0].pageY, $event.target)"
-  (touchend)="onStop()"
-  (touchmove)="onMove($event.changedTouches[0].pageX, $event.changedTouches[0].pageY); $event.preventDefault()"
-  (mousedown)="onStart($event.pageX, $event.pageY, $event.target)"
-  (mouseup)="onStop()"
-  (mousemove)="onMove($event.pageX, $event.pageY); $event.preventDefault()"
->
-
-  <ng-container *ngFor="let task of tasks; let i = index">
+<app-login-form
+    class="page"
+    *ngIf="pages.loginForm.active"
+    [ngClass]="pages.loginForm.class"
+    (loginEvent)="login()"
+    (toRegisterForm)="pageFromTo('loginForm', 'registerForm', 'next')"
+></app-login-form>
     
-    <app-task
-      #taskRef
-      [task]="task" 
-      [i]="i"
-      [ngStyle]="action.i === i ? activeStyles() : {}"
-      [ngStyle]="action.iToSkip.includes(i) ? skipStyles(i) : {}"
-      [ngStyle]="stopTransition ? {'transition': 'unset'} : {}"
-      (deleteEvent)="deleteTask($event)"
-    ></app-task>
 
-  </ng-container>
+<app-register-form
+    class="page"
+    *ngIf="pages.registerForm.active"
+    [ngClass]="pages.registerForm.class"
+    (closeEvent)="pageFromTo('registerForm', 'loginForm', 'back')"
+    (iconEvent)="pageFromTo('registerForm', 'loginForm', 'back')"
+></app-register-form>
+    
+    
+<app-tasks-board
+    class="page"
+    *ngIf="pages.tasksBoard.active"
+    [ngClass]="pages.tasksBoard.class"
+    (logoutEvent)="logout()"
+></app-tasks-board>
+    
+    
+<app-adding-form
+    class="page"
+    *ngIf="pages.addForm.active"
+    [ngClass]="pages.addForm.class"
+    (addEvent)="addTask()"
+    (iconEvent)="pageFromTo('addForm', 'tasksBoard', 'back')"
+></app-adding-form>
 
-</div>
+    
+<app-icon-btn 
+    *ngIf="(pages.addForm.active || pages.tasksBoard.active)"
+    class="add-task-btn"
+    [icon]="buttonIcon" 
+    (click)="onButton()"
+></app-icon-btn>

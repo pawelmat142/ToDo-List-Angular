@@ -1,0 +1,32 @@
+:host {
+    position: relative;
+    color: #fffc;
+    transition: .2s ease;
+}
+
+
+.task {
+    padding: .6em 4%;
+    height: 65px;
+    background-color: #080a0bbd;
+    box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
+    border-radius: .4em;
+
+    cursor: pointer;
+    user-select: none;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    transition: background-color .1s ease;
+
+    &:hover {background-color: #0f181dbd;}
+
+    &:active {background-color: #000000ea;}
+}
+
+
+@media screen and (min-width: 767px) {
+
+}

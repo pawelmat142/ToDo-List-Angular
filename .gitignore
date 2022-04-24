@@ -2,6 +2,7 @@
 
 #moje
 production
+.env
 
 # Compiled output
 /dist

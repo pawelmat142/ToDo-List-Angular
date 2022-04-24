@@ -1,0 +1,32 @@
+<app-header title="Dodaj zadanie">
+    <app-icon-btn icon="back" (click)="iconEvent.emit()"></app-icon-btn>
+</app-header>
+
+<form 
+    class="item"
+    [formGroup]="addingForm" 
+    (ngSubmit)="onSubmit()" 
+    (keyup.escape)="addingForm.reset()"
+>
+
+    <div>
+        <label>Nazwa zadania</label>
+        <input type="text" formControlName="name" autocomplete="off"/>
+        <div *ngIf="submitted && f.name.errors" >
+            <app-icon-btn class="icon" icon="errorRed"></app-icon-btn>
+            <p *ngIf="f.name.errors.required">Nazwa jest wymagana</p>
+        </div>
+    </div>
+    
+    <div>
+        <label>Data ukończenia</label>
+        <input type="date" formControlName="deadline" autocomplete="off"/>
+        <div *ngIf="submitted && f.deadline.errors" >
+            <app-icon-btn class="icon" icon="errorRed"></app-icon-btn>
+            <p *ngIf="f.deadline.errors.required">Data ukończenia jest wymagana</p>
+        </div>
+    </div>
+    
+    <button [disabled]="addingForm.invalid">Dodaj</button>
+
+</form>

@@ -1,14 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
-* {box-sizing: border-box;}
+@import "assets/variables.scss";
+
+
+* {
+    box-sizing: border-box;
+    // blue highlight off
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    // font
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
 body {
-    background: url(./assets/img/bg-pattern.svg), #343a40;
-    background-size: 110px;
-    background-attachment: fixed;
     margin: 0;
-    overflow: hidden;
-    min-height: 100vh;
 }
+
 
 h1,h2,h3,h4,h5,h6,p { margin: 0 0;}
 
@@ -21,10 +33,89 @@ a:hover {
     text-decoration: none;
 }
 
-button {
+button,
+textarea,
+input,
+select,
+a {
     margin: 0;
     padding: 0;
 }
 
+.page {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    padding-top: $header-height;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+    background: url(./assets/img/bg-pattern.svg), #343a40;
+    background-size: 70px;
+    background-attachment: fixed;
+    overflow: hidden;
+
+    font-family: sans-serif;
+    font-size: 16px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.item {
+    width: 100%;
+    font-size: 16px;
+}
 
 
+// open / close page animation
+
+.page.open {
+    animation: show-page $page-show-duration ease-in-out forwards;
+}
+
+.page.close {
+    transform: translateX(0);
+    animation: hide-page $page-show-duration ease-in-out forwards;
+}
+
+@keyframes show-page {
+    from { 
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to { 
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes hide-page {
+    from { 
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to { 
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+
+
+
+
+
+@media screen and (min-width: 767px) {
+    .page {
+        padding-top: $header-height-desktop;
+        background-size: 110px;
+    }
+
+    .item {
+        width: 60%;
+        max-width: 600px;
+        font-size: 18px;
+    }
+
+}

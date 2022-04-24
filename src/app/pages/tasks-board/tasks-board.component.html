@@ -1,0 +1,28 @@
+<app-header title="Lista zadań" class="header">
+  <app-icon-btn [icon]="'logout'" (click)="logoutEvent.emit()"></app-icon-btn>
+</app-header>
+
+<div 
+  class="tasks"
+  (touchend)="onStop()"
+  (touchmove)="onMove($event.changedTouches[0].pageX, $event.changedTouches[0].pageY); $event.preventDefault()"
+  (mouseup)="onStop()"
+  (mousemove)="onMove($event.pageX, $event.pageY); $event.preventDefault()"
+  >
+  
+    <app-task
+      class="item"
+      *ngFor="let task of tasks; let i = index"
+      #taskRef
+      [task]="task" 
+      [index]="i"
+      [ngStyle]="action.i === i ? activeStyles() : {}"
+      [ngStyle]="action.iToSkip.includes(i) ? skipStyles(i) : {}"
+      [ngStyle]="stopTransition ? {'transition': 'unset'} : {}"
+      
+      (touchstart)="onStart($event.changedTouches[0].pageX, $event.changedTouches[0].pageY, i)"
+      (mousedown)="onStart($event.pageX, $event.pageY, i)"
+    ></app-task>
+
+
+</div>

@@ -1,0 +1,23 @@
+@import "../../../assets/variables.scss";
+
+.tasks {
+    padding-top: $padding-top;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .3em;
+}
+
+.stop-transition {
+    transition: unset;
+}
+
+
+@media screen and (min-width: 767px) {
+    .tasks {
+        padding-top: $padding-top-desktop;
+        gap: .6em;
+    }
+}
