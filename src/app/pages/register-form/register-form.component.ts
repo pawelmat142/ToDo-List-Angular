@@ -13,7 +13,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class RegisterFormComponent {
 
   @Output() closeEvent = new EventEmitter<void>()
-  @Output() iconEvent = new EventEmitter<void>()
   
   constructor(private http: HttpService) { }
 

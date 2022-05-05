@@ -2,11 +2,11 @@ $flaticon-font: "flaticon";
 
 @font-face {
     font-family: $flaticon-font;
-    src: url("./flaticon.ttf?415a73115b70e7b4ae81d15b03fed286") format("truetype"),
-url("./flaticon.woff?415a73115b70e7b4ae81d15b03fed286") format("woff"),
-url("./flaticon.woff2?415a73115b70e7b4ae81d15b03fed286") format("woff2"),
-url("./flaticon.eot?415a73115b70e7b4ae81d15b03fed286#iefix") format("embedded-opentype"),
-url("./flaticon.svg?415a73115b70e7b4ae81d15b03fed286#flaticon") format("svg");
+    src: url("./flaticon.ttf?2583a1ab1ea842a278543bab6e40284f") format("truetype"),
+url("./flaticon.woff?2583a1ab1ea842a278543bab6e40284f") format("woff"),
+url("./flaticon.woff2?2583a1ab1ea842a278543bab6e40284f") format("woff2"),
+url("./flaticon.eot?2583a1ab1ea842a278543bab6e40284f#iefix") format("embedded-opentype"),
+url("./flaticon.svg?2583a1ab1ea842a278543bab6e40284f#flaticon") format("svg");
 }
 
 i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
@@ -77,6 +77,9 @@ $flaticon-map: (
     "star-half-empty": "\f136",
     "music": "\f137",
     "musical-note": "\f138",
+    "editing": "\f139",
+    "pencil": "\f13a",
+    "edit": "\f13b",
 );
 
 .flaticon-trash:before {
@@ -246,4 +249,13 @@ $flaticon-map: (
 }
 .flaticon-musical-note:before {
     content: map-get($flaticon-map, "musical-note");
+}
+.flaticon-editing:before {
+    content: map-get($flaticon-map, "editing");
+}
+.flaticon-pencil:before {
+    content: map-get($flaticon-map, "pencil");
+}
+.flaticon-edit:before {
+    content: map-get($flaticon-map, "edit");
 }

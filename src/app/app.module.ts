@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { registerLocaleData } from '@angular/common';
+import localePl from '@angular/common/locales/pl';
+registerLocaleData(localePl);
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -11,15 +13,18 @@ import { AddingFormComponent } from './pages/adding-form/adding-form.component';
 import { TasksBoardComponent } from './pages/tasks-board/tasks-board.component';
 import { LoginFormComponent } from './pages/login-form/login-form.component';
 import { RegisterFormComponent } from './pages/register-form/register-form.component';
+import { MenuComponent } from './pages/menu/menu.component';
+import { EditFormComponent } from './pages/edit-form/edit-form.component';
 
 // other components
 import { HeaderComponent } from './components/header/header.component';
 import { TaskComponent } from './components/task/task.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { IconBtnComponent } from './components/icon-btn/icon-btn.component';
 
-import localePl from '@angular/common/locales/pl';
-registerLocaleData(localePl);
+import { LimitToPipe } from './pipes/limit-to.pipe';
+import { TaskFilterPipe } from './pipes/task-filter.pipe';
+import { ManualComponent } from './pages/manual/manual.component';
+
 
 @NgModule({
   declarations: [
@@ -27,11 +32,15 @@ registerLocaleData(localePl);
     HeaderComponent,
     AddingFormComponent,
     TaskComponent,
-    FooterComponent,
     IconBtnComponent,
     TasksBoardComponent,
     LoginFormComponent,
-    RegisterFormComponent
+    RegisterFormComponent,
+    LimitToPipe,
+    MenuComponent,
+    TaskFilterPipe,
+    EditFormComponent,
+    ManualComponent
   ],
   imports: [
     BrowserModule,

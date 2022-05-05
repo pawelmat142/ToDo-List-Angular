@@ -4,6 +4,5 @@ export interface Task {
   name: string,
   deadline: Date,
   done: boolean,
-  order?: number
   subtasks?: string,
 }

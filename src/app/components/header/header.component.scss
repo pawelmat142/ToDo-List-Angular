@@ -8,19 +8,19 @@
     left: 0;
     width: 100%;
 
-
     padding: .3em 5%;
     background: $pink-gradient;
     box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px;
     
-    display: flex;
-    justify-content: space-between;
-    font-size: 25px;
-    color: #fffc;
-
-    * {
+    div {
         display: flex;
+        justify-content: space-between;
         align-items: center;
+        font-size: 25px;
+        color: #fffc;
+        height: 100%;
+        max-width: 800px;
+        margin: 0 auto;
     }
 
     h1 {

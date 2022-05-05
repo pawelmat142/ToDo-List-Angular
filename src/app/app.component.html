@@ -13,15 +13,36 @@
     *ngIf="pages.registerForm.active"
     [ngClass]="pages.registerForm.class"
     (closeEvent)="pageFromTo('registerForm', 'loginForm', 'back')"
-    (iconEvent)="pageFromTo('registerForm', 'loginForm', 'back')"
 ></app-register-form>
+
+
+<app-menu
+    class="page"
+    *ngIf="pages.menu.active"
+    [ngClass]="pages.menu.class"
+    (closeEvent)="pageFromTo('menu', 'tasksBoard', 'back')"
+    (logoutEvent)="logout()"
+    (addTaskEvent)="pageFromTo('menu', 'addForm', 'next')"
+    (manualEvent)="pageFromTo('menu', 'manual', 'next')"
+></app-menu>
+
+
+<app-manual
+    class="page"
+    *ngIf="pages.manual.active"
+    [ngClass]="pages.manual.class"
+    (closeEvent)="pageFromTo('manual', 'menu', 'back')"
+    (tasksEvent)="pageFromTo('manual', 'tasksBoard', 'back')"
+></app-manual>
     
-    
+
 <app-tasks-board
     class="page"
     *ngIf="pages.tasksBoard.active"
     [ngClass]="pages.tasksBoard.class"
-    (logoutEvent)="logout()"
+    (menuEvent)="pageFromTo('tasksBoard', 'menu', 'next')"
+    (fistTaskEvent)="pageFromTo('tasksBoard', 'addForm', 'next')"
+    (editEvent)="pageFromTo('tasksBoard', 'editForm', 'next')"
 ></app-tasks-board>
     
     
@@ -30,13 +51,21 @@
     *ngIf="pages.addForm.active"
     [ngClass]="pages.addForm.class"
     (addEvent)="addTask()"
-    (iconEvent)="pageFromTo('addForm', 'tasksBoard', 'back')"
+    (backEvent)="pageFromTo('addForm', 'tasksBoard', 'back')"
 ></app-adding-form>
+    
+<app-edit-form
+    class="page"
+    *ngIf="pages.editForm.active"
+    [ngClass]="pages.editForm.class"
+    (backEvent)="pageFromTo('editForm', 'tasksBoard', 'back')"
+></app-edit-form>
 
     
 <app-icon-btn 
-    *ngIf="(pages.addForm.active || pages.tasksBoard.active)"
+    *ngIf="pages.tasksBoard.active"
     class="add-task-btn"
-    [icon]="buttonIcon" 
+    icon="add"
+    color="pink"
     (click)="onButton()"
 ></app-icon-btn>

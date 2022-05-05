@@ -1,12 +1,71 @@
-<div class="task">
+<div class="task" [ngClass]="showClass? 'show' : ''">
 
-    <p class="content">{{task.name}}</p>
-    
-    <p class="deadline">{{task.deadline | date: 'yyyy-MM-dd':'':'pl' }}</p>
-    
-    
-    <div class="buttons">
-        <app-icon-btn [icon]="'remove'" (click)="deleteTask()"></app-icon-btn>
+    <div class="task-row">
+
+        <p class="content">{{task.name | limitTo : taskNameLimit}}</p>
+        
+        <p class="deadline">{{task.deadline | date: 'd MMM':'':'pl' }}</p>
+        
+        <app-icon-btn 
+            class="remove button"
+            icon='remove'
+            color='red'
+            (click)="deleteTask()"
+        ></app-icon-btn>
+        
+        <app-icon-btn 
+            class="button"
+            [icon]="task.done? 'ok' : 'error'"
+            [color]="task.done? 'green' : 'blue'"
+            (click)="markAsDone()"
+            (touchstart)="$event.stopPropagation()"
+            (touchend)="$event.stopPropagation()"
+            (mouseup)="$event.stopPropagation()"
+            (mousedown)="$event.stopPropagation()"
+        ></app-icon-btn>
+
     </div>
+    
+    <div class="task-row hidden" *ngIf="visible">
+
+        <div class="subtasks">
+
+            <p *ngIf="!subtasks">Brak etapów</p>
+
+            <div 
+                *ngFor="let subtask of subtasks; let i = index"
+                (click)="markSubtaskAsDone(i)"
+                (touchstart)="$event.stopPropagation()"
+                (touchend)="$event.stopPropagation()"
+                (mouseup)="$event.stopPropagation()"
+                (mousedown)="$event.stopPropagation()"
+            >
+                <app-icon-btn 
+                    class="button"
+                    [icon]="subtask.done? 'ok' : 'error'"
+                    [color]="subtask.done? 'green' : 'blue'"
+                ></app-icon-btn>
+                
+                <p>{{subtask.name | limitTo : 30}}</p>
+                
+            </div>
+
+        </div>
+
+        <div class="deadline">{{task.deadline | date: 'yyyy':'':'pl' }}</div>
+
+        <app-icon-btn 
+            class="button" 
+            icon="edit" 
+            (click)="editTask()"
+            (touchstart)="$event.stopPropagation()"
+            (touchend)="$event.stopPropagation()"
+            (mouseup)="$event.stopPropagation()"
+            (mousedown)="$event.stopPropagation()"
+        ></app-icon-btn>
+        
+
+    </div>
+
 
 </div>

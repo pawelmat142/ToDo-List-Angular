@@ -11,34 +11,40 @@ import { Component, Input } from '@angular/core';
 })
 export class IconBtnComponent implements OnChanges, OnInit {
 
-  @Input()
-  icon: string
-
+  @Input() icon: string
+  @Input() color: string
   _icon: string
-
+  
   animating: boolean = false
 
   animationDuration: number = 200
 
   icons = {
-    back: ['flaticon-arrow', 'white'],
-    add: ['flaticon-add-button', 'green'],
-    addPink: ['flaticon-add-button', 'pink'],
-    errorPink: ['flaticon-close', 'pink'],
-    remove: ['flaticon-trash', 'red'],
-    ok: ['flaticon-tick', 'blue'],
-    important: ['flaticon-warning', 'yellow'],
-    gear: ['flaticon-gear', 'yellow'],
-    internet: ['flaticon-internet-gear', 'yellow'],
-    user: ['flaticon-user', 'yellow'],
-    error: ['flaticon-close', 'yellow'],
-    errorRed: ['flaticon-close', 'red'],
-    warning: ['flaticon-warning', 'yellow'],
-    question: ['flaticon-question', 'yellow'],
-    logout: ['flaticon-logout', 'white'],
+    back: 'flaticon-arrow',
+    add: 'flaticon-add-button',
+    remove: 'flaticon-trash',
+    ok: 'flaticon-tick',
+    important: 'flaticon-warning',
+    gear: 'flaticon-gear',
+    internet: 'flaticon-internet-gear',
+    user: 'flaticon-user',
+    error: 'flaticon-close',
+    warning: 'flaticon-warning',
+    question: 'flaticon-question',
+    logout: 'flaticon-logout',
+    edit: 'flaticon-edit',
+    menu: 'flaticon-paragraph',
+    notes: 'flaticon-notes',
+    list: 'flaticon-list',
+    comment: 'flaticon-comment',
+    smartphone: 'flaticon-smartphone-1',
+    switch: 'flaticon-switch'
   }
 
-  classes = (): Array<string> => this.icons[this._icon]
+  classes = (): Array<string> => [
+    this.icons[this._icon],
+    this.color ? this.color : 'white'
+  ]
   
   ngOnInit(): void {
     this.isIconAvailable(this.icon)
@@ -47,17 +53,19 @@ export class IconBtnComponent implements OnChanges, OnInit {
 
 
   ngOnChanges(change: SimpleChanges): void {
-    const newIcon = change['icon'].currentValue
-    this.isIconAvailable(newIcon)
-    this.animating = !this.animating
-    setTimeout(() =>
-      this.animating = !this.animating,
-      this.animationDuration
-    )
-    setTimeout(() =>
-      this._icon = newIcon,
-      this.animationDuration / 2
-    )
+    if (!change.icon.firstChange) {
+      const newIcon = change['icon'].currentValue
+      this.isIconAvailable(newIcon)
+      this.animating = !this.animating
+      setTimeout(() =>
+        this.animating = !this.animating,
+        this.animationDuration
+      )
+      setTimeout(() =>
+        this._icon = newIcon,
+        this.animationDuration / 2
+      )
+    }
   }
 
 

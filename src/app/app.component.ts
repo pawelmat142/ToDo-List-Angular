@@ -1,6 +1,5 @@
-import { Component,  OnInit } from '@angular/core';
-import { HttpService } from './services/http.service';
-import { TasksService } from './services/tasks.service';
+import { Component,  OnInit } from '@angular/core'
+import { TasksService } from './services/tasks.service'
 
 @Component({
   selector: 'app-root',
@@ -19,11 +18,23 @@ export class AppComponent implements OnInit {
       active: false,
       class: ''
     },
+    menu: {
+      active: false,
+      class: ''
+    },
+    manual: {
+      active: false,
+      class: ''
+    },
     tasksBoard: {
       active: true,
       class: ''
     },
     addForm: {
+      active: false,
+      class: ''
+    },
+    editForm: {
       active: false,
       class: ''
     },
@@ -59,7 +70,7 @@ export class AppComponent implements OnInit {
     console.log('logout')
     localStorage.removeItem('token')
     setTimeout(() => { 
-      this.pageFromTo('tasksBoard', 'loginForm', 'next')
+      this.pageFromTo('menu', 'loginForm', 'next')
     },50)
   }
   
@@ -87,21 +98,21 @@ export class AppComponent implements OnInit {
     }
   }
 
-  buttonIcon = 'addPink' // or 'errorPink'
+  buttonIcon = 'add' // or 'errorPink'
 
   onButton(): void {
     if (this.pages.tasksBoard.active) {
       this.pageFromTo('tasksBoard', 'addForm', 'next')
-      this.buttonIcon = 'errorPink'
+      this.buttonIcon = 'error'
     } else { 
       this.pageFromTo('addForm', 'tasksBoard', 'back')
-      this.buttonIcon = 'addPink'
+      this.buttonIcon = 'add'
     }
   }
   
   addTask(): void {
     this.pageFromTo('addForm', 'tasksBoard', 'back')
-    this.buttonIcon = 'addPink'
+    this.buttonIcon = 'add'
   }
   
   private isPageValid(from: string, to: string, direction: string): boolean {

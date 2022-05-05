@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { TasksService } from 'src/app/services/tasks.service';
 import { Task } from 'src/app/models/task';
+import { Subtask } from 'src/app/models/subtask';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -14,30 +15,87 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class AddingFormComponent {
 
   @Output() addEvent = new EventEmitter<void>()
-  @Output() iconEvent = new EventEmitter<void>()
+  @Output() backEvent = new EventEmitter<void>()
 
   constructor(private tasksService: TasksService) { }
 
-
   addingForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
+    name: new FormControl('', [Validators.required, Validators.maxLength(100)]),
     deadline: new FormControl('', [Validators.required]),
+    subtasks: new FormControl(),
   })
 
-  submitted = false;
+  submitted = false
 
   errorMsg = ''
   message = ''
 
+  
   get f() { return this.addingForm.controls }
+  
+  onFocusout(): void { this.submitted = true }
+  
 
   async onSubmit() {
     this.submitted = true
     if (this.addingForm.invalid) return
-    this.tasksService.addTask(this.addingForm.value as Partial<Task>)
-    setTimeout(()=> this.addEvent.emit(), 200)
+
+    let addForm: Partial<Task> = {
+      name: this.addingForm.value.name,
+      deadline: this.addingForm.value.deadline,
+      subtasks: this.subtasks? this.getSubtasksAsString() : null
+    }
+
+    this.tasksService.addTask(addForm)
+    setTimeout(() => this.addEvent.emit(), 200)
+  }
+  
+
+  // subtasks
+  subtasks: Array<number> = []
+
+  addSubtask(): void {
+    let number = 1
+    if (this.subtasks.length) {
+      number = this.subtasks[this.subtasks.length - 1] + 1
+    }
+    this.subtasks.push(number)
+
+    this.addingForm.addControl(
+      this.subtaskName(number),
+      new FormControl('', [
+        Validators.required,
+        Validators.maxLength(30)
+      ])
+    )
   }
 
 
+  removeSubtask(number: number): void {
+    this.subtasks = this.subtasks.filter(el => el !== number)
+    this.addingForm.removeControl(this.subtaskName(number))
+  }
+
+  markSubtaskAsDone(number: number): void { 
+    console.log('markSubtaskAsDone')
+  }
+
+
+  subtaskName(number: number): string { 
+    return 'subtask-' + number
+  }
+
+
+  private getSubtasksAsString(): string {
+
+    let subtasksArr: Array<Subtask> =
+      this.subtasks.map(number => {
+      return {
+        name: this.addingForm.value[this.subtaskName(number)],
+        done: false
+      } as Subtask
+     })
+    return subtasksArr.length? JSON.stringify(subtasksArr) : ''
+  }
 
 }
