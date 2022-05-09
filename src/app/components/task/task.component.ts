@@ -1,7 +1,8 @@
-import { Component, Input, Output, EventEmitter} from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostBinding, OnInit} from '@angular/core';
 import { TasksService } from 'src/app/services/tasks.service';
 import { Task } from '../../models/task'
 import { Subtask } from '../../models/subtask'
+import { DialogService } from 'src/app/services/dialog.service';
 
 
 @Component({
@@ -9,40 +10,60 @@ import { Subtask } from '../../models/subtask'
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss']
 })
-export class TaskComponent {
+export class TaskComponent implements OnInit {
 
   @Input() task: Task
   @Input() index: number
 
   @Output() deleteEvent = new EventEmitter<void>()
   @Output() editEvent = new EventEmitter<void>()
+  
+  @HostBinding('class.important') important: boolean
 
-  constructor(private tasksService: TasksService) { }
+  constructor(
+    private tasksService: TasksService,
+    private dialogService: DialogService
+  ) { }
 
   visible: boolean = false
   showClass: boolean = false
   taskNameLimit: number = 40
 
   subtasks: Array<Subtask> = null
-  
 
+  ngOnInit(): void {
+    this.important = this.task.important
+  }
+  
+  
   onClick(): void {
     if (this.visible) this.hide()
     else this.show()
   }
 
 
-  async deleteTask() {
-    let deleted = await this.tasksService
-      .deleteTask(this.task.id)
-    if (deleted) this.deleteEvent.emit()
-  }
-  
-
   async markAsDone() {
     let marked = await this.tasksService
       .markAsDone(this.task.id, !this.task.done)
     if (marked) this.task.done = !this.task.done
+  }
+
+
+  editTask(): void {
+    this.tasksService.editTaskId = this.task.id
+    this.editEvent.emit()
+  }
+
+  deleteTask() {
+    this.dialogService.setTaskToDeleteIds([this.task.id])
+    this.dialogService.open()
+  }
+
+  async markAsImportant() {
+    let marked = await this.tasksService
+      .markAsImportant(this.task.id, !this.task.important)
+    if (marked) this.task.important = !this.task.important
+    this.important = this.task.important
   }
 
 
@@ -60,12 +81,7 @@ export class TaskComponent {
   }
 
 
-  editTask(): void {
-    this.tasksService.editTaskId = this.task.id
-    this.editEvent.emit()
-  }
-
-
+  
   private show(): void {
     if (this.task.subtasks) { 
       this.subtasks = JSON.parse(this.task.subtasks) as Array<Subtask>

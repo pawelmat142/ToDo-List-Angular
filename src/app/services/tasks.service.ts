@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, map, catchError} from 'rxjs';
+import { BehaviorSubject, Observable, Subject, map} from 'rxjs';
 import { Task } from "../models/task";
 import { HttpService } from './http.service';
 import { HttpErrorResponse } from '@angular/common/http'
+import { Subtask } from '../models/subtask';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TasksService {
 
-  
   private tasks = new BehaviorSubject<Task[]>([])
   
   private redirectToLoginPage = new Subject<boolean>()
   _redirectToLoginPage = this.redirectToLoginPage.asObservable()
   
-  constructor(private http: HttpService) { }
+  constructor(
+    private http: HttpService
+  ) { }
 
   filter: string = 'all'
 
@@ -36,11 +38,14 @@ export class TasksService {
 
 
   getTasks(): Observable<Task[]> {
-    return this.tasks.asObservable().pipe(map(task => { 
-      if (this.filter === 'all') return task
-      if (this.filter === 'done') return task.filter(task => task.done)
-      if (this.filter === 'notDone') return task.filter(task => !task.done)
-    }))
+    return this.tasks.asObservable()
+      .pipe(
+        map(task => { 
+          if (this.filter === 'all') return task
+          if (this.filter === 'done') return task.filter(task => task.done)
+          if (this.filter === 'notDone') return task.filter(task => !task.done)
+        })
+      )
   }
 
 
@@ -63,13 +68,12 @@ export class TasksService {
       })
 
 
-  deleteTask = (taskId: number) =>
-    new Promise<boolean>(resolve => { 
-      this.http.deleteTask(taskId).subscribe(
-        () => resolve(true),
-        () => resolve(false)
-      )
-    })
+  deleteTask(taskId: number) { 
+    this.http.deleteTask(taskId).subscribe(
+      () => this.loadTasks(),
+      (error) => this.handleError(error)
+    )
+  }
 
   
   deleteAll = () =>
@@ -97,11 +101,20 @@ export class TasksService {
         () => resolve(false)
       )
     })
+  
+  
+  markAsImportant = (i: number, important: boolean) =>
+    new Promise<boolean>(resolve => {
+      this.http.markAsImportant(i, important).subscribe(
+        () => resolve(true),
+        () => resolve(false)
+      )
+    })
 
 
-  updateSubtasks = (i: number, subtasks: string) =>
+  updateSubtasks = (i: number, subtasks: String) =>
     new Promise<boolean>(resolve => { 
-      this.http.updateSubtasks(i, subtasks).subscribe(
+        this.http.updateSubtasks(i, subtasks).subscribe(
         () => resolve(true),
         () => resolve(false)
       )

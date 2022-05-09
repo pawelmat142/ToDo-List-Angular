@@ -54,12 +54,16 @@
     (backEvent)="pageFromTo('addForm', 'tasksBoard', 'back')"
 ></app-adding-form>
     
+
 <app-edit-form
     class="page"
     *ngIf="pages.editForm.active"
     [ngClass]="pages.editForm.class"
     (backEvent)="pageFromTo('editForm', 'tasksBoard', 'back')"
 ></app-edit-form>
+
+
+<app-dialog></app-dialog>
 
     
 <app-icon-btn 
@@ -69,3 +73,4 @@
     color="pink"
     (click)="onButton()"
 ></app-icon-btn>
+

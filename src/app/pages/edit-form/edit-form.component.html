@@ -20,7 +20,7 @@
                 [color]="task.done ?'green' : 'blue'"
                 (click)="$event.preventDefault(); markTaskAsDone()"
             ></app-icon-btn>
-            <app-icon-btn class="icon" icon="error" color="red"></app-icon-btn>
+            <app-icon-btn *ngIf="f.name.touched && f.name.errors" class="icon" icon="error" color="red"></app-icon-btn>
             <p *ngIf="f.name.touched && f.name.errors?.required">Nazwa jest wymagana</p>
             <p *ngIf="f.name.touched && f.name.errors?.maxlength">Maksymalnie 100 znaków</p>
         </div>
@@ -29,9 +29,14 @@
     <div>
         <label>Data ukończenia</label>
         <input type="date" formControlName="deadline" autocomplete="off"/>
-        <div *ngIf="f.deadline.touched && f.deadline.errors" >
-            <app-icon-btn class="icon" icon="error" color="red"></app-icon-btn>
-            <p *ngIf="f.deadline.errors.required">Data ukończenia jest wymagana</p>
+        <div>
+            <app-icon-btn
+                *ngIf="f.deadline.value"
+                class="icon" 
+                icon="error" 
+                color="red"
+                (click)="f.deadline.setValue('')"
+            ></app-icon-btn>
         </div>
     </div>
 
@@ -39,7 +44,11 @@
     
     <div *ngFor="let number of _subtasks" class="subtask">
         <label>Etap {{number}}</label>
-        <input type="text" formControlName={{subtaskName(number)}}>
+        <input 
+            type="text" 
+            formControlName={{subtaskName(number)}}
+            #subtaskInputReference
+        >
         <div>
             <app-icon-btn 
                 class="icon" 
@@ -56,7 +65,7 @@
             ></app-icon-btn>
             <p *ngIf="f[subtaskName(number)]?.touched && 
                 f[subtaskName(number)].errors?.maxlength">
-                Maksymalnie 30 znaków
+                Maksymalnie 50 znaków
             </p>
             <p *ngIf="f[subtaskName(number)]?.touched && 
                 f[subtaskName(number)].errors?.required">

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core'
+import { Component, OnInit, Output, EventEmitter, ViewChildren, ElementRef } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { TasksService } from 'src/app/services/tasks.service'
 import { map } from 'rxjs/operators'
@@ -20,7 +20,7 @@ export class EditFormComponent implements OnInit {
 
   editForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-    deadline: new FormControl('', [Validators.required]),
+    deadline: new FormControl(''),
     subtasks: new FormControl(),
   })
 
@@ -34,10 +34,8 @@ export class EditFormComponent implements OnInit {
     if (this.task.subtasks) { 
       this.subtasks = JSON.parse(this.task.subtasks)
     }
-  
   }
   
-
   submitted = false
 
   errorMsg = ''
@@ -46,6 +44,9 @@ export class EditFormComponent implements OnInit {
   get f() { return this.editForm.controls }
   
   onFocusout(): void { this.submitted = true }
+
+  @ViewChildren('subtaskInputReference')
+  subtaskInputReference: ElementRef
 
   ngOnInit(): void {
 
@@ -57,7 +58,7 @@ export class EditFormComponent implements OnInit {
       this.editForm.addControl(this.subtaskName(index + 1), 
         new FormControl(subtask.name, [
           Validators.required,
-          Validators.maxLength(30)
+          Validators.maxLength(50)
         ])
       )
     })
@@ -82,7 +83,7 @@ export class EditFormComponent implements OnInit {
     }
   }
 
-  markTaskAsDone():void { 
+  markTaskAsDone(): void { 
     this.task.done = !this.task.done
   }
 
@@ -101,13 +102,19 @@ export class EditFormComponent implements OnInit {
       done: false,
     } as Subtask)
 
+    
     this.editForm.addControl(
       this.subtaskName(number),
       new FormControl('', [
         Validators.required,
-        Validators.maxLength(30)
+        Validators.maxLength(50)
       ])
     )
+
+    setTimeout(() => { 
+      this.subtaskInputReference['_results'][number-1]
+        .nativeElement.focus()
+    }, 200)
   }
 
   removeSubtask(number: number): void {

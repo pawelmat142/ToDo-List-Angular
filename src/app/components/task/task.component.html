@@ -4,14 +4,8 @@
 
         <p class="content">{{task.name | limitTo : taskNameLimit}}</p>
         
-        <p class="deadline">{{task.deadline | date: 'd MMM':'':'pl' }}</p>
-        
-        <app-icon-btn 
-            class="remove button"
-            icon='remove'
-            color='red'
-            (click)="deleteTask()"
-        ></app-icon-btn>
+        <p *ngIf="task.deadline" class="deadline">{{task.deadline | date: 'd MMM':'':'pl' }}</p>
+        <p *ngIf="!task.deadline" class="deadline">---</p>
         
         <app-icon-btn 
             class="button"
@@ -46,23 +40,50 @@
                     [color]="subtask.done? 'green' : 'blue'"
                 ></app-icon-btn>
                 
-                <p>{{subtask.name | limitTo : 30}}</p>
+                <p>{{subtask.name | limitTo : 50}}</p>
                 
             </div>
 
         </div>
 
-        <div class="deadline">{{task.deadline | date: 'yyyy':'':'pl' }}</div>
+        <div *ngIf="task.deadline" class="deadline">{{task.deadline | date: 'yyyy':'':'pl' }}</div>
+        <div *ngIf="!task.deadline" class="deadline">---</div>
 
-        <app-icon-btn 
-            class="button" 
-            icon="edit" 
-            (click)="editTask()"
-            (touchstart)="$event.stopPropagation()"
-            (touchend)="$event.stopPropagation()"
-            (mouseup)="$event.stopPropagation()"
-            (mousedown)="$event.stopPropagation()"
-        ></app-icon-btn>
+        <div class="icons">
+
+            <app-icon-btn 
+                class="button" 
+                icon="edit" 
+                (click)="editTask()"
+                (touchstart)="$event.stopPropagation()"
+                (touchend)="$event.stopPropagation()"
+                (mouseup)="$event.stopPropagation()"
+                (mousedown)="$event.stopPropagation()"
+            ></app-icon-btn>
+
+            <app-icon-btn 
+                class="button" 
+                icon="remove"
+                color="red"
+                (click)="deleteTask()"
+                (touchstart)="$event.stopPropagation()"
+                (touchend)="$event.stopPropagation()"
+                (mouseup)="$event.stopPropagation()"
+                (mousedown)="$event.stopPropagation()"
+            ></app-icon-btn>
+
+            <app-icon-btn 
+                class="button" 
+                icon="important"
+                color="yellow"
+                (click)="markAsImportant()"
+                (touchstart)="$event.stopPropagation()"
+                (touchend)="$event.stopPropagation()"
+                (mouseup)="$event.stopPropagation()"
+                (mousedown)="$event.stopPropagation()"
+            ></app-icon-btn>
+
+        </div>
         
 
     </div>

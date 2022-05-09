@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { DialogService } from 'src/app/services/dialog.service';
 import { TasksService } from 'src/app/services/tasks.service';
+import { BehaviorSubject, Observable, Subject, map} from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -13,7 +15,10 @@ export class MenuComponent implements OnInit {
   @Output() manualEvent = new EventEmitter<void>()
   @Output() addTaskEvent = new EventEmitter<void>()
 
-  constructor(private tasksService: TasksService) { }
+  constructor(
+    private tasksService: TasksService,
+    private dialogService: DialogService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -32,27 +37,30 @@ export class MenuComponent implements OnInit {
     this.tasksService.filter = 'all'
     this.closeEvent.emit()
   }
-  
-  async deleteAll() {
-    if (this.tasksService.length) {
-      let deleted = await this.tasksService.deleteAll()
-      if (deleted) {
-        this.closeEvent.emit()
-      }
-    } else { 
-      this.closeEvent.emit()
-    }
-  }
-  
-  async deleteAllDone() {
-    if (this.tasksService.length) {
-      let deleted = await this.tasksService.deleteAllDone()
-      if (deleted) {
-        this.closeEvent.emit()
-      }
-    } else { 
-      this.closeEvent.emit()
-    }
-  }
 
+
+  deleteAll(): void {
+    let ids = []
+    this.tasksService.getTasks().subscribe(
+      (tasks) => this.dialogService
+        .setTaskToDeleteIds(tasks.map(task => task.id)),
+      (error) => console.log(error)
+    )
+    this.dialogService.open()
+    setTimeout(() => this.closeEvent.emit(), 200)
+  }
+  
+  
+  deleteAllDone() {
+    this.tasksService.getTasks().subscribe(
+      (tasks) => this.dialogService
+        .setTaskToDeleteIds(tasks
+          .filter(task => task.done === true)
+          .map(task => task.id)
+        ),
+      (error) => console.log(error)
+    )
+    this.dialogService.open()
+    setTimeout(() => this.closeEvent.emit(), 200)
+  }
 }

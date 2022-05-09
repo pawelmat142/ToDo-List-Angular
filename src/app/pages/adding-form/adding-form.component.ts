@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChildren, ElementRef } from '@angular/core';
 import { TasksService } from 'src/app/services/tasks.service';
 import { Task } from 'src/app/models/task';
 import { Subtask } from 'src/app/models/subtask';
@@ -21,7 +21,7 @@ export class AddingFormComponent {
 
   addingForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-    deadline: new FormControl('', [Validators.required]),
+    deadline: new FormControl(''),
     subtasks: new FormControl(),
   })
 
@@ -34,6 +34,9 @@ export class AddingFormComponent {
   get f() { return this.addingForm.controls }
   
   onFocusout(): void { this.submitted = true }
+
+  @ViewChildren('subtaskInputReference')
+  subtaskInputReference: ElementRef
   
 
   async onSubmit() {
@@ -65,9 +68,14 @@ export class AddingFormComponent {
       this.subtaskName(number),
       new FormControl('', [
         Validators.required,
-        Validators.maxLength(30)
+        Validators.maxLength(50)
       ])
     )
+
+    setTimeout(() => { 
+      this.subtaskInputReference['_results'][number-1]
+        .nativeElement.focus()
+    }, 200)
   }
 
 
@@ -75,6 +83,7 @@ export class AddingFormComponent {
     this.subtasks = this.subtasks.filter(el => el !== number)
     this.addingForm.removeControl(this.subtaskName(number))
   }
+
 
   markSubtaskAsDone(number: number): void { 
     console.log('markSubtaskAsDone')
@@ -87,7 +96,6 @@ export class AddingFormComponent {
 
 
   private getSubtasksAsString(): string {
-
     let subtasksArr: Array<Subtask> =
       this.subtasks.map(number => {
       return {

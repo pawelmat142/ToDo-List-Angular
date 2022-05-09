@@ -22,8 +22,11 @@ export class TasksBoardComponent implements OnInit, AfterViewInit {
   constructor(private tasksService: TasksService) { 
     tasksService.loadTasks()
     tasksService.getTasks()
-      .subscribe((data: Task[]) => this.tasks = data)
+      .subscribe((data: Task[]) => { 
+        this.tasks = data
+      })
   }
+
 
   @ViewChildren(TaskComponent, { read: ElementRef })
   taskElementsRefs: QueryList<ElementRef>
@@ -73,7 +76,7 @@ export class TasksBoardComponent implements OnInit, AfterViewInit {
           this.action.toSkip = 0
           this.action.iToSkip = []
       }
-    },300)
+    },100)
   }
 
 

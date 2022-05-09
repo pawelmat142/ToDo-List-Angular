@@ -1,4 +1,5 @@
 import { Component,  OnInit } from '@angular/core'
+import { DialogService } from './services/dialog.service';
 import { TasksService } from './services/tasks.service'
 
 @Component({
@@ -40,13 +41,17 @@ export class AppComponent implements OnInit {
     },
   }
 
-  constructor(tasksService: TasksService) { 
+  constructor(
+    private tasksService: TasksService,
+    private dialogService: DialogService
+  ) { 
 
-    tasksService._redirectToLoginPage.subscribe(() => { 
+    this.tasksService._redirectToLoginPage.subscribe(() => { 
       if (!this.pages.loginForm.active) { 
         this.pageFromTo('tasksBoard', 'loginForm', 'back')
       }
     })
+
   }
   
   ngOnInit(): void {}
@@ -114,6 +119,7 @@ export class AppComponent implements OnInit {
     this.pageFromTo('addForm', 'tasksBoard', 'back')
     this.buttonIcon = 'add'
   }
+
   
   private isPageValid(from: string, to: string, direction: string): boolean {
     if (direction !== 'next' && direction !== 'back')

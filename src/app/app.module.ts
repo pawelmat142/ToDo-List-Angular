@@ -22,8 +22,9 @@ import { TaskComponent } from './components/task/task.component';
 import { IconBtnComponent } from './components/icon-btn/icon-btn.component';
 
 import { LimitToPipe } from './pipes/limit-to.pipe';
-import { TaskFilterPipe } from './pipes/task-filter.pipe';
 import { ManualComponent } from './pages/manual/manual.component';
+import { DialogComponent } from './components/dialog/dialog.component';
+import { CustomDatePipe } from './pipes/custom-date.pipe';
 
 
 @NgModule({
@@ -38,9 +39,10 @@ import { ManualComponent } from './pages/manual/manual.component';
     RegisterFormComponent,
     LimitToPipe,
     MenuComponent,
-    TaskFilterPipe,
     EditFormComponent,
-    ManualComponent
+    ManualComponent,
+    DialogComponent,
+    CustomDatePipe,
   ],
   imports: [
     BrowserModule,

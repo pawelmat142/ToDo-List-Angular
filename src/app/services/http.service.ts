@@ -4,13 +4,13 @@ import { Observable, tap } from 'rxjs';
 import { RegisterForm } from '../models/registerForm';
 import { User } from '../models/user';
 import { Task } from '../models/task';
+import { Subtask } from '../models/subtask';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
-
 
   // private url = 'http://localhost:3333'
 
@@ -90,7 +90,17 @@ export class HttpService {
   }
 
 
-  updateSubtasks(taskId: number, subtasks: string): Observable<void> {
+  markAsImportant(taskId: number, important: boolean): Observable<void> {
+    const params = new HttpParams().set('_id', taskId)
+    const body = {important: important}
+    return this.http.patch<void>(this.url + '/important', body, {
+      params: params,
+      headers: this.headers
+    })
+  }
+
+
+  updateSubtasks(taskId: number, subtasks: String): Observable<void> {
     const params = new HttpParams().set('_id', taskId)
     const body = {subtasks: subtasks}
     return this.http.patch<void>(this.url + '/subtasks', body, {
