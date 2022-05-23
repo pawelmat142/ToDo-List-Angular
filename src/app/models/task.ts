@@ -5,7 +5,7 @@ export interface Task {
   user_id?: number,
   name: string,
   important: boolean,
-  deadline: Date,
+  deadline?: Date,
   done: boolean,
   subtasks?: string,
 }

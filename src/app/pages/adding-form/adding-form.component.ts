@@ -45,8 +45,11 @@ export class AddingFormComponent {
 
     let addForm: Partial<Task> = {
       name: this.addingForm.value.name,
-      deadline: this.addingForm.value.deadline,
       subtasks: this.subtasks? this.getSubtasksAsString() : null
+    }
+
+    if (this.addingForm.value.deadline) { 
+      addForm.deadline = this.addingForm.value.deadline
     }
 
     this.tasksService.addTask(addForm)

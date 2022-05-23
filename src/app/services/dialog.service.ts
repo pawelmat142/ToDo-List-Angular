@@ -68,11 +68,8 @@ export class DialogService {
     this.close()
   }
 
-
+  
   setTaskToDeleteIds(ids: number[]): void {
     this.taskToDeleteIds = ids
   }
-
-  
-
 }

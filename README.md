@@ -1,27 +1,33 @@
-# Todo
+# To-Do List
+ This repo is only frontend part of my To-Do List app.<br />
+ Full app is available here: [To-Do-Full](https://github.com/pawelmat142/ToDo-List-Full) <br />
+ 
+## Table of contents
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Setup](#setup)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
+## General info
+ 
+ This project is a typical to-do list. I have enriched applications with myself created drag and drop sorting option. <br />
+ 
+ The motivation to do the task was to learn the Angular Framework with TypeScript language, learn noSQL database - MongoDB, building a registration and login system, and learning how to implement JWT.<br />
+ 
+  App is designed mostly for smartphone devices but works well on desktop also.<br />
+ 
+ 
+## Technologies
+Project is created with:
+* Angular 13 
+* TypeScript
+* HTML5, SCSS
 
-## Development server
+## Setup
+To run this project locally follow these steps:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+* create directory named as you wish and open it with IDE
+* run `git clone https://github.com/pawelmat142/ToDo-List-Angular.git ./`
+* run `npm install`
+* run `ng serve`
+* navigate to `http://localhost:4200/`.
+* now u have to register, login and u can add your first task :)

@@ -12,9 +12,9 @@ import { Subtask } from '../models/subtask';
 })
 export class HttpService {
 
-  // private url = 'http://localhost:3333'
+  private url = 'http://localhost:3333'
 
-  private url = 'http://156.67.94.141:443'
+  // private url = 'http://156.67.94.141:443'
   
   private headers = new HttpHeaders({ 'Authorization': '' })
   

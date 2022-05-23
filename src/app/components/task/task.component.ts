@@ -23,7 +23,7 @@ export class TaskComponent implements OnInit {
   constructor(
     private tasksService: TasksService,
     private dialogService: DialogService
-  ) { }
+  ) {}
 
   visible: boolean = false
   showClass: boolean = false
@@ -35,7 +35,7 @@ export class TaskComponent implements OnInit {
     this.important = this.task.important
   }
   
-  
+
   onClick(): void {
     if (this.visible) this.hide()
     else this.show()

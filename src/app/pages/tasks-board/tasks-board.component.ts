@@ -59,7 +59,6 @@ export class TasksBoardComponent implements OnInit, AfterViewInit {
 
 
   onStart(x: number, y: number, i: number): void {
-    
     this.action.i = i
     this.isPressed = true
     this.action.xStart = x
@@ -88,11 +87,13 @@ export class TasksBoardComponent implements OnInit, AfterViewInit {
       }
     }
 
-    if (Math.abs(this.action.dx) > 200 && this.isActive) { 
+    if (Math.abs(this.action.dx) > 200 && this.isActive) {
       (this.taskQueryList.find((el, i) => i === this.action.i).deleteTask())
+      this.isActive = false
       this.isPressed = false
-      this.action.dx = 0
-      this.action.dy = 0
+      this.clearAction()
+      // this.action.dx = 0
+      // this.action.dy = 0
       return
     }
 
@@ -199,7 +200,8 @@ export class TasksBoardComponent implements OnInit, AfterViewInit {
   private async reorder() {
     // const prevTasks = JSON.parse(JSON.stringify(this.tasks))
     let newTasks = []
-    let tasksYs = this.taskElementsRefs.map(task => task.nativeElement.getBoundingClientRect().y)
+    let tasksYs = this.taskElementsRefs.map(task =>
+      task.nativeElement.getBoundingClientRect().y)
     setTimeout(() => { 
       this.tasks.forEach(task => {
         const iMin = tasksYs.indexOf(Math.min(...tasksYs))
