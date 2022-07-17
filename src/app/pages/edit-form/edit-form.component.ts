@@ -71,7 +71,9 @@ export class EditFormComponent implements OnInit {
 
     this.task.name = this.editForm.value.name
     this.task.deadline = this.editForm.value.deadline
-    this.task.subtasks = this._subtasks? this.getSubtasksAsString() : null
+    this.task.subtasks = this._subtasks ? this.getSubtasksAsString() : null
+    
+    console.log(this.task.deadline)
 
     let updated = await this.tasksService.updateTask(this.task)
     if (updated) {

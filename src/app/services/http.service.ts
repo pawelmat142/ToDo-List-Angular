@@ -4,7 +4,7 @@ import { Observable, tap } from 'rxjs';
 import { RegisterForm } from '../models/registerForm';
 import { User } from '../models/user';
 import { Task } from '../models/task';
-import { Subtask } from '../models/subtask';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
@@ -12,10 +12,8 @@ import { Subtask } from '../models/subtask';
 })
 export class HttpService {
 
-  private url = 'http://localhost:3333'
+  private url = environment.apiUrl
 
-  // private url = 'http://156.67.94.141:443'
-  
   private headers = new HttpHeaders({ 'Authorization': '' })
   
   constructor(private http: HttpClient) {
@@ -31,7 +29,7 @@ export class HttpService {
 
   login(body: Partial<User>): Observable<string> {
     return this.http.post<string>(this.url + '/login', body)
-      .pipe(tap(token => { 
+      .pipe(tap(token => {
         this.setTokenHeader(token)
         localStorage.setItem('token', token)
       }))
