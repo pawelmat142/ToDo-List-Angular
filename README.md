@@ -1,6 +1,6 @@
 # To-Do List
  This repo is only frontend part of my To-Do List app.<br />
- Full app is available here: [To-Do-Full](https://github.com/pawelmat142/ToDo-List-Full) <br />
+ Full app is available here: [To-Do-Full](https://github.com/pawelmat142/ToDo-List-backend) <br />
  
 ## Table of contents
 * [General info](#general-info)
