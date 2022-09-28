@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   port: 443,
-  apiUrl: 'http://localhost/api',
+  // apiUrl: 'http://localhost:3333/api',
+  apiUrl: 'https://todo.pppmmm.pl/api'
 };
 
 /*
