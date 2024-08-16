@@ -13,7 +13,7 @@
         <input type="text" formControlName="nickname" autocomplete="off"/>
         <div *ngIf="f.nickname.touched && f.nickname.errors" >
             <app-icon-btn class="icon" icon="error" color="red"></app-icon-btn>
-            <p *ngIf="f.nickname.errors.required">Nick jest wymagany</p>
+            <p *ngIf="f .nickname.errors.required">Nick jest wymagany</p>
             <p *ngIf="f.nickname.errors.minlength">Nick musi zawierać przynajmniej 4 znaki</p>
         </div>
     </div>
